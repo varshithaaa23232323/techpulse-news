@@ -6,9 +6,15 @@ pipeline {
     }
     stages {
         stage('Checkout Code') { steps { checkout scm } }
+        
         stage('Build Docker Image') {
-            steps { script { dockerImage = docker.build("${DOCKER_IMAGE}:${BUILD_NUMBER}") } }
+            steps { 
+                script { 
+                    dockerImage = docker.build("${DOCKER_IMAGE}:${BUILD_NUMBER}") 
+                } 
+            }
         }
+        
         stage('Push to Docker Hub') {
             steps {
                 script {
@@ -19,10 +25,12 @@ pipeline {
                 }
             }
         }
+        
         stage('Deploy to Kubernetes') {
             steps {
-                sh "kubectl set image deployment/techpulse-deployment techpulse=${DOCKER_IMAGE}:${BUILD_NUMBER}"
-                sh "kubectl rollout status deployment/techpulse-deployment"
+                // Using 'bat' instead of 'sh' because Jenkins is running on Windows
+                bat "kubectl set image deployment/techpulse-deployment techpulse=${DOCKER_IMAGE}:${BUILD_NUMBER}"
+                bat "kubectl rollout status deployment/techpulse-deployment"
             }
         }
     }
