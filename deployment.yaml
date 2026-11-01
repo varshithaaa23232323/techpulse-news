@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: techpulse-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: techpulse
+  template:
+    metadata:
+      labels:
+        app: techpulse
+    spec:
+      containers:
+      - name: techpulse
+        image: varshithaa777/techpulse-news:latest
+        ports:
+        - containerPort: 5000
