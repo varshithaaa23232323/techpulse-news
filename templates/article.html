@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ article.title }} | TechPulse</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root { --bg: #09090b; --surface: #18181b; --text: #fafafa; --text-muted: #a1a1aa; --accent: #6366f1; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+        body { background-color: var(--bg); color: var(--text); min-height: 100vh; }
+        nav { display: flex; justify-content: space-between; align-items: center; padding: 20px 50px; background: rgba(9, 9, 11, 0.8); backdrop-filter: blur(10px); position: sticky; top: 0; z-index: 100; border-bottom: 1px solid #27272a; }
+        .logo { font-size: 1.5rem; font-weight: 800; letter-spacing: -1px; text-decoration: none; color: var(--text); }
+        .logo span { color: var(--accent); }
+        .nav-links a { color: var(--text-muted); text-decoration: none; margin-left: 30px; transition: color 0.3s; font-weight: 600; }
+        .nav-links a:hover { color: var(--text); }
+        
+        .article-container { max-width: 800px; margin: 60px auto; padding: 0 20px; }
+        .back-btn { color: var(--accent); text-decoration: none; font-weight: 600; display: inline-block; margin-bottom: 20px; }
+        .back-btn:hover { text-decoration: underline; }
+        
+        .article-header { margin-bottom: 30px; }
+        .article-header h1 { font-size: 3rem; line-height: 1.1; margin: 15px 0; }
+        .meta { display: flex; gap: 20px; color: var(--text-muted); font-size: 0.9rem; align-items: center; margin-bottom: 20px; }
+        .tag { background: rgba(99, 102, 241, 0.15); color: var(--accent); padding: 4px 12px; border-radius: 20px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; font-size: 0.8rem;}
+        
+        .article-img { width: 100%; height: 400px; object-fit: cover; border-radius: 16px; border: 1px solid #27272a; margin-bottom: 30px; }
+        
+        .article-content { font-size: 1.1rem; line-height: 1.8; color: #d4d4d8; margin-bottom: 40px; }
+        
+        .actions { border-top: 1px solid #27272a; padding-top: 20px; display: flex; gap: 15px; }
+        .btn { padding: 10px 20px; border-radius: 8px; border: none; font-weight: 600; cursor: pointer; transition: 0.3s; font-size: 1rem; }
+        .btn-like { background: rgba(239, 68, 68, 0.1); color: #ef4444; border: 1px solid #ef4444; }
+        .btn-like:hover { background: #ef4444; color: white; }
+        .btn-like.liked { background: #ef4444; color: white; }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="/" class="logo">Tech<span>Pulse</span>.</a>
+        <div class="nav-links">
+            <a href="/">Home</a>
+            <a href="#">Technology</a>
+            <a href="#">DevOps</a>
+            <a href="#">Contact</a>
+        </div>
+    </nav>
+
+    <main class="article-container">
+        <a href="/" class="back-btn">← Back to Home</a>
+        
+        <header class="article-header">
+            <span class="tag">{{ article.category }}</span>
+            <h1>{{ article.title }}</h1>
+            <div class="meta">
+                <span>By {{ article.author }}</span>
+                <span>•</span>
+                <span>{{ article.date }}</span>
+            </div>
+        </header>
+
+        <img src="{{ article.image }}" alt="{{ article.title }}" class="article-img">
+        
+        <div class="article-content">
+            <p>{{ article.content }}</p>
+        </div>
+
+        <!-- Like Button Functionality -->
+        <div class="actions">
+            <button class="btn btn-like" id="likeBtn" onclick="toggleLike()">
+                ❤️ Like this article
+            </button>
+        </div>
+    </main>
+
+    <script>
+        // Simple JavaScript to make the like button functional
+        function toggleLike() {
+            const btn = document.getElementById('likeBtn');
+            btn.classList.toggle('liked');
+            if (btn.classList.contains('liked')) {
+                btn.innerHTML = '❤️ Liked!';
+            } else {
+                btn.innerHTML = '❤️ Like this article';
+            }
+        }
+    </script>
+</body>
+</html>
